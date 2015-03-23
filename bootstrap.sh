@@ -12,12 +12,15 @@ apt-get -y install mysql-server
 #mysql_secure_installation
 apt-get -y install php5-fpm php5-mysql
 sed -i s/\;cgi\.fix_pathinfo\s*\=\s*1/cgi.fix_pathinfo\=0/ /etc/php5/fpm/php.ini
+
+#need to move this updated file to make php work
+cp /vagrant/www.conf /etc/php5/fpm/pool.d/www.conf
 service php5-fpm restart
 mv /etc/nginx/sites-available/default /etc/nginx/sites-available/default.bak
 cp /vagrant/default /etc/nginx/sites-available/default
 service nginx restart
-echo "<?php phpinfo(); ?>" > /usr/share/nginx/html/info.php
+echo "<?php phpinfo(); ?>" > /usr/share/nginx/www/info.php
 
 #Git
-sudo apt-get install git
+sudo apt-get -y install git
 
